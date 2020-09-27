@@ -1,0 +1,423 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Stoyan Dimkov" />
+        <meta name="Resource-type" content="Document" />
+
+        <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.9/fullpage.min.js"
+            integrity="sha512-Gx/C4x1qubng2MWpJIxTPuWch9O88dhFFfpIl3WlqH0jPHtCiNdYsmJBFX0q5gIzFHmwkPzzYTlZC/Q7zgbwCw=="
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.9/vendors/scrolloverflow.min.js"
+            integrity="sha512-pYyQWhzi2lV+RM4GmaUA56VPL48oLVvsHmP9tuQ8MaZMDHomVEDjXXnfSVKXayy+wLclKPte0KbsuVoFImtE7w=="
+            crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.9/fullpage.min.css"
+            integrity="sha512-8M8By+q+SldLyFJbybaHoAPD6g07xyOcscIOQEypDzBS+sTde5d6mlK2ANIZPnSyxZUqJfCNuaIvjBUi8/RS0w=="
+            crossorigin="anonymous" />
+
+        <style>
+            html {
+                font-size: 17px;
+                font-family: Trebuchet MS, serif
+            }
+
+            img {
+                height: 6rem;
+            }
+
+            .single img {
+                margin-left: 5%;
+                width: 90%;
+                height: auto;
+            }
+
+            h1 {
+                text-align: center;
+                margin-left: 5%;
+                margin-right: 5%;
+                margin-top: 50px;
+                margin-bottom: 20px;
+            }
+
+            .info {
+                width: 40%;
+                margin-left: 5%;
+                margin-right: 5%;
+                white-space: pre-line;
+                float: left;
+            }
+
+            .gallery {
+                width: 45%;
+                margin-left: 50%;
+            }
+
+            iframe {
+                width: 45%;
+                height: 50%;
+            }
+
+            @media only screen and (max-width: 700px) {
+                html {
+                    font-size: 13px;
+                }
+
+                img {
+                    height: 4.5rem;
+                }
+
+                iframe {
+                    margin-left: 10%;
+                    width: 80%;
+                    height: 30%;
+                }
+
+                .info {
+                    width: 84%;
+                    margin-left: 8%;
+                    padding-bottom: 15px;
+                }
+
+                .gallery {
+                    width: 84%;
+                    margin-left: 8%;
+                }
+            }
+
+            .menu-toggler {
+                position: absolute;
+                top: 5px;
+                left: 20px;
+                z-index: 999;
+                height: 60px;
+                width: 60px;
+                outline: none;
+                cursor: pointer;
+                display: -webkit-box;
+                display: flex;
+                -webkit-box-align: center;
+                align-items: center;
+            }
+
+            .menu-toggler span,
+            .menu-toggler span::before,
+            .menu-toggler span::after {
+                position: absolute;
+                content: '';
+                width: 30px;
+                height: 2.5px;
+                background: purple;
+                border-radius: 20px;
+                -webkit-transition: 500ms cubic-bezier(0.77, 0, 0.175, 1);
+                transition: 500ms cubic-bezier(0.77, 0, 0.175, 1);
+            }
+
+            .menu-toggler span::before {
+                top: -8px;
+            }
+
+            .menu-toggler span::after {
+                top: 8px;
+            }
+
+            .menu-toggler.active>span {
+                background: transparent;
+            }
+
+            .menu-toggler.active>span::before,
+            .menu-toggler.active>span::after {
+                background: white;
+                top: 0px;
+            }
+
+            .menu-toggler.active>span::before {
+                -webkit-transform: rotate(-225deg);
+                transform: rotate(-225deg);
+            }
+
+            .menu-toggler.active>span::after {
+                -webkit-transform: rotate(225deg);
+                transform: rotate(225deg);
+            }
+
+            .menu {
+                position: absolute;
+                left: -50%;
+                z-index: 998;
+                color: black;
+                background: linear-gradient(to bottom right, blue, purple);
+                -webkit-clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+                clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+                width: 50%;
+                height: 100%;
+                padding: 60px;
+                display: -webkit-box;
+                display: flex;
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                flex-direction: column;
+                -webkit-box-pack: center;
+                justify-content: center;
+                -webkit-transition: 300ms left cubic-bezier(0.77, 0, 0.175, 1);
+                transition: 300ms left cubic-bezier(0.77, 0, 0.175, 1);
+            }
+
+            @media only screen and (max-width: 500px) {
+                .menu {
+                    width: 250px;
+                    left: -250px;
+                }
+            }
+
+            @media only screen and (min-width: 800px) {
+                .menu {
+                    width: 400px;
+                    left: -400px;
+                }
+            }
+
+            .menu.active {
+                left: 0;
+            }
+
+            .menu a {
+                margin-bottom: 2rem;
+                text-decoration: none;
+                color: lightgray;
+            }
+
+            .menu a.active {
+                color: white;
+                font-size: 1.3rem;
+                font-weight: bold;
+            }
+
+            *,
+            *::before,
+            *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            .next span {
+                position: absolute;
+                bottom: 32px;
+                left: 50%;
+                width: 24px;
+                height: 24px;
+                margin-left: -12px;
+                border-left: 1px solid purple;
+                border-bottom: 1px solid purple;
+                -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+                -webkit-animation: sdb05 1.5s infinite;
+                animation: sdb05 1.5s infinite;
+                box-sizing: border-box;
+            }
+
+            @-webkit-keyframes sdb05 {
+                0% {
+                    -webkit-transform: rotate(-45deg) translate(0, 0);
+                    opacity: 0;
+                }
+
+                50% {
+                    opacity: 1;
+                }
+
+                100% {
+                    -webkit-transform: rotate(-45deg) translate(-20px, 20px);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes sdb05 {
+                0% {
+                    transform: rotate(-45deg) translate(0, 0);
+                    opacity: 0;
+                }
+
+                50% {
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: rotate(-45deg) translate(-20px, 20px);
+                    opacity: 0;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="menu">
+            <a data-menuanchor="Апартамент-13" href="#Апартамент-13">Апартамент №13</a>
+            <a data-menuanchor="Локация" href="#Локация">Локация</a>
+            <a data-menuanchor="Дневна" href="">Дневна и Кухня</a>
+            <a data-menuanchor="Спалня-Изток" href="#Спалня-Изток">Спалня Изток</a>
+            <a data-menuanchor="Спалня-Запад" href="">Спалня Запад</a>
+            <a data-menuanchor="Голяма-баня" href="">Голяма баня/тоалетна</a>
+            <a data-menuanchor="Малка-баня" href="">Малка тоалетна/килер</a>
+            <a data-menuanchor="Скрито-помещение" href="#Скрито-помещение">Скрито помещение</a>
+            <a data-menuanchor="Контакт" href="#Контакт">Контакт</a>
+        </div>
+        <div class="menu-toggler"><span></span></div>
+
+        <div id="fullpage">
+
+            <div class="section" data-anchor="Апартамент-13">
+                <h1>3-стаен апартамент под наем в кв. Витоша</h1>
+                <div class="info">
+                    <p style="text-align: justify">
+                        Чисто-нов и стилно обзаведен, непреходен апартамент очаква своите първи наематели.
+
+                        В рамките на 104кв.м апартамента разполага със:
+                        ▫ 2 спални
+                        ▫ просторен хол + кухня
+                        ▫ тераса с гледка към Витоша
+                        ▫ две бани (голяма и малка)
+                        ▫ мокро помещение/склад
+
+                        Към апартамента може да бъде нает и гараж с топла връзка към комплекса.
+
+                        Повече за локацията, обзавеждането и снимки на отделните стаи ще намерите в следващите страници.
+                    </p>
+                </div>
+                <div class="gallery">
+                    <a href="assets/rooms.jpg" class="glightbox single"><img src="assets/rooms.jpg" alt="" /></a>
+                </div>
+                <div class="next" onclick="fullpage_api.moveSectionDown()"><span /></div>
+            </div>
+
+            <div class="section" data-anchor="Локация">
+                <h1>Локация</h1>
+                <div class="info">
+                    <p style="text-align: justify">
+                        Апартамента е разположен в затворен комплекс с охрана, частен двор, гаражи с топла връзка
+                        към апартаментите. Локацията е тиха и спокойна, подходяща за семейства с малки деца.
+                    </p>
+                    <b>В непосредствена близост се намират:</b>
+                    ▫ 3 хранителни магазина
+                    ▫ Магазин за алкохол <a href="https://avanti-bg.com">Аванти</a>
+                    ▫ Месарница <a href="https://www.facebook.com/gospodinmesar">г-н Месар</a>
+                    ▫ Фитнес зала <a href="https://www.facebook.com/befitbymilko">BeFit</a>
+                    ▫ Рибен ресторант
+                    ▫ Частна детска градина <a href="https://www.bssofia.bg">British School of Sofia</a>
+                </div>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8742.603496561966!2d23.323983220119764!3d42.65300282786572!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa844051896d2f%3A0xe472b91845324f96!2z0JrQvtC80L_Qu9C10LrRgSDQn9C10YDQu9CwLCB1bC4gIk1vZ2lsYXRhIiwgMTcwMCBQZXJsYXRhLCBTb2ZpYQ!5e0!3m2!1sen!2sbg!4v1601239623694!5m2!1sen!2sbg"></iframe>
+                <div class="next" onclick="fullpage_api.moveSectionDown()"><span /></div>
+            </div>
+
+            <div class="section" data-anchor="Спалня-Изток">
+                <h1>Спалня с източно изложение</h1>
+                <div class="info">
+                    <b>Обзавеждане:</b>
+                    ▫ Двойно легло 180/200
+                    ▫ Висок клас двулицев матрак с мемори пяна и индвидуални покет-пружини
+                    ▫ 4-крилен гардероб
+                    ▫ Бюро + работен стол
+                    ▫ плътни ролетни щори
+                    ▫ Тих и ефективен климатик Daikin
+
+                    <b>Интериорни материали:</b>
+                    ▫ Немски ламиниран паркет EGGER клас AC4
+                    ▫ Английска боя Dulux
+                    ▫ Бели MDF первази в английски стил
+                    ▫ LED осветеление с топла температура на светлината подходящо за спални помещения
+                    ▫ 4 бр Cat6 FTP кабели вградени в стените за безпроблемно свързване на телевизор / настолен компютър
+                </div>
+                <div class="gallery">
+                    <a href="assets/bedroom-east/10.jpg" class="glightbox" data-gallery="bedroom-east"><img
+                            src="assets/bedroom-east/thumbs/10.jpg" alt="" /></a>
+                    <a href="assets/bedroom-east/1.jpg" class="glightbox" data-gallery="bedroom-east"><img
+                            src="assets/bedroom-east/thumbs/1.jpg" alt="" /></a>
+                    <a href="assets/bedroom-east/2.jpg" class="glightbox" data-gallery="bedroom-east"><img
+                            src="assets/bedroom-east/thumbs/2.jpg" alt="" /></a>
+                    <a href="assets/bedroom-east/3.jpg" class="glightbox" data-gallery="bedroom-east"><img
+                            src="assets/bedroom-east/thumbs/3.jpg" alt="" /></a>
+                    <a href="assets/bedroom-east/4.jpg" class="glightbox" data-gallery="bedroom-east"><img
+                            src="assets/bedroom-east/thumbs/4.jpg" alt="" /></a>
+                    <a href="assets/bedroom-east/5.jpg" class="glightbox" data-gallery="bedroom-east"><img
+                            src="assets/bedroom-east/thumbs/5.jpg" alt="" /></a>
+                    <a href="assets/bedroom-east/6.jpg" class="glightbox" data-gallery="bedroom-east"><img
+                            src="assets/bedroom-east/thumbs/6.jpg" alt="" /></a>
+                    <a href="assets/bedroom-east/7.jpg" class="glightbox" data-gallery="bedroom-east"><img
+                            src="assets/bedroom-east/thumbs/7.jpg" alt="" /></a>
+                    <a href="assets/bedroom-east/8.jpg" class="glightbox" data-gallery="bedroom-east"><img
+                            src="assets/bedroom-east/thumbs/8.jpg" alt="" /></a>
+                    <a href="assets/bedroom-east/9.jpg" class="glightbox" data-gallery="bedroom-east"><img
+                            src="assets/bedroom-east/thumbs/9.jpg" alt="" /></a>
+                </div>
+                <div class="next" onclick="fullpage_api.moveSectionDown()"><span /></div>
+            </div>
+
+            <div class="section" data-anchor="Скрито-помещение">
+                <h1>Скрито помещение</h1>
+                <div class="info">
+                    Практичен килер/мокро помещение със скрит достъп от хола.
+
+                    <b>Обзавеждане:</b>
+                    ▫ Неръждаем бойлер Tedan - нов (10г гаранция)
+                    ▫ Пералня Whirlpool - нова (5г гаранция)
+                    ▫ Подсилени рафтове
+                </div>
+                <div class="gallery">
+                    <a href="assets/hidden-room/1.jpg" class="glightbox" data-gallery="hidden-room"><img
+                            src="assets/hidden-room/thumbs/1.jpg" alt="" /></a>
+                    <a href="assets/hidden-room/2.jpg" class="glightbox" data-gallery="hidden-room"><img
+                            src="assets/hidden-room/thumbs/2.jpg" alt="" /></a>
+                    <a href="assets/hidden-room/3.jpg" class="glightbox" data-gallery="hidden-room"><img
+                            src="assets/hidden-room/thumbs/3.jpg" alt="" /></a>
+                    <a href="assets/hidden-room/4.jpg" class="glightbox" data-gallery="hidden-room"><img
+                            src="assets/hidden-room/thumbs/4.jpg" alt="" /></a>
+                    <a href="assets/hidden-room/5.jpg" class="glightbox" data-gallery="hidden-room"><img
+                            src="assets/hidden-room/thumbs/5.jpg" alt="" /></a>
+                </div>
+                <div class="next" onclick="fullpage_api.moveSectionDown()"><span /></div>
+            </div>
+
+            <div class="section" data-anchor="Контакт">
+                <h1>Контакт</h1>
+                <div class="info" style="width: 60%; margin-left: 20%">
+                    При интерес или въпроси относно имота можете да се свържете със собственика на <a
+                        href="tel:+359884790990">0884 790 990</a>
+
+                    При наемане се сключва стандартен договор за наем.
+                    Минимален срок на договора - <i>12 месеца</i>.
+
+                    <b>Наемна цена:</b>
+                    ▫ Апартамент №13 - <i>600€ / месец</i>
+                    ▫ Подземен гараж - <i>70€ / месец</i>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const lightbox = GLightbox({});
+            const $fullpage = new fullpage('#fullpage', {
+                menu: '.menu',
+                scrollOverflow: true,
+                scrollOverflowReset: true
+            });
+            const toggler = document.querySelector('.menu-toggler');
+            const menu = document.querySelector('.menu');
+
+            document.addEventListener("click", (e) => {
+                if (toggler.contains(e.target)) {
+                    toggler.classList.toggle('active');
+                    menu.classList.toggle('active');
+                } else if (!menu.contains(e.target) || e.target.tagName == 'A') {
+                    toggler.classList.remove('active');
+                    menu.classList.remove('active');
+                }
+            });
+        </script>
+    </body>
+</html>
